@@ -3,7 +3,7 @@ This script allows for media key control over Spotify playback on Linux. The scr
 
 Place script anywhere you want and do ```chmod +x path/to/script.sh```
 
-Example:
+Example sxhkd config:
 ```
 XF86AudioPlay
     path/to/script.sh play-pause
