@@ -9,6 +9,7 @@ XF86Audio{RaiseVolume,LowerVolume}
 	amixer set Master {5%+,5%-}; path/to/script.sh
 
 XF86AudioMute
-	amixer set Master {mute,unmute}; path/to/script.sh```
+	amixer set Master {mute,unmute}; path/to/script.sh
+```
 
 Required packages: ```Dunst alsa-utils```
