@@ -1,6 +1,4 @@
 # A Collection of Linux Utilities 
-Linux script to control spotify playback with media keys.
-
 Welcome to my repo! This repository houses a growing collection of scripts aimed at enhancing the Linux desktop experience. As of now, the repository contains scripts for media control with Spotify and volume notifications with Dunst.
 
 ## 🎵 Media Control for Spotify
