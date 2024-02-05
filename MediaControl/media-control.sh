@@ -1,50 +1,65 @@
 #!/bin/bash
 
-# Function to check if Spotify is active
+LAST_ACTIVE_WINDOW_FILE="/tmp/last_active_window"
+
+get_current_active_window() {
+    xdotool getactivewindow getwindowname
+}
+
+# Function to save the current active window if it's Spotify or Chrome
+save_current_active_window() {
+    current_window=$(get_current_active_window)
+
+    if [[ $current_window == *"Spotify Free"* ]]; then
+        echo "Spotify" > "$LAST_ACTIVE_WINDOW_FILE"
+    elif [[ $current_window == *"Google Chrome"* ]]; then
+        echo "Chrome" > "$LAST_ACTIVE_WINDOW_FILE"
+    fi
+}
+
+read_last_active_window() {
+    if [ -f "$LAST_ACTIVE_WINDOW_FILE" ]; then
+        cat "$LAST_ACTIVE_WINDOW_FILE"
+    else
+        echo "No window"
+    fi
+}
+
 is_spotify_active() {
     playerctl -l | grep -q spotify
 }
 
-# Function to check if Spotify is playing
 is_spotify_playing() {
     playerctl --player=spotify status | grep -q Playing
 }
 
-# Function to check if Spotify window is active
-is_spotify_window_active() {
-    wmctrl -lx | grep -i spotify.Spotify | grep -q "$(printf '%x\n' "$(xdotool getactivewindow)")"
-}
+control_playback() {
+    if [ -f "$LAST_ACTIVE_WINDOW_FILE" ]; then
+        last_window=$(cat "$LAST_ACTIVE_WINDOW_FILE")
 
-# Function to check if Chrome is the active window
-is_chrome_active() {
-    xdotool getactivewindow getwindowname | grep -q -e "Google Chrome" -e "Chromium"
-}
-
-# Control playback based on the argument
-case "$1" in
-    play-pause)
-        if { ! is_chrome_active && (is_spotify_active || is_spotify_playing || is_spotify_window_active); } then
-            playerctl --player=spotify play-pause
-        else
-            playerctl play-pause
+        if [[ $last_window == "Spotify" ]]; then
+            playerctl --player=spotify "$1"
+        elif [[ $last_window == "Chrome" ]]; then
+            playerctl --player=chromium "$1"
         fi
+    fi
+}
+
+case "$1" in
+    save)
+        save_current_active_window
+        ;;
+    play-pause)
+        control_playback play-pause
         ;;
     next)
-        if { ! is_chrome_active && (is_spotify_active || is_spotify_playing || is_spotify_window_active); } then
-            playerctl --player=spotify next
-        else
-            playerctl next
-        fi
+        control_playback next
         ;;
     previous)
-        if { ! is_chrome_active && (is_spotify_active || is_spotify_playing || is_spotify_window_active); } then
-            playerctl --player=spotify previous
-        else
-            playerctl previous
-        fi
+        control_playback previous
         ;;
     *)
-        echo "Usage: $0 {play-pause|next|previous}"
+        echo "Usage: $0 {save|play-pause|next|previous}"
         exit 1
         ;;
 esac
