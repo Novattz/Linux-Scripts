@@ -1,18 +1,12 @@
 # Spotify-control
-This script allows for media key control over Spotify playback on Linux. The script prioritizes Spotify unless Chrome is the active window. In addition to checking playback status, it checks for an active Spotify window and the active window being Chrome.
+Control Spotify and Chrome seamlessly using media keys. This script checks your last active window and lets you manage your media playback in Linux with ease. The script comes in 2 parts which is media-control.sh itself and save_windows.sh. save_windows.sh should run constantly as it updates the tmp file made in /tmp.
 
 Place script anywhere you want and do ```chmod +x path/to/script.sh```
 
 Example sxhkd config:
 ```
-XF86AudioPlay
-    path/to/script.sh play-pause
-
-XF86AudioNext
-    path/to/script.sh next
-
-XF86AudioPrev
-    path/to/script.sh previous
+XF86Audio{Prev,Next,Play}
+    ~/path/to/script/media-control.sh save; ~/path/to/script/media-control.sh {previous,next,play-pause}
 ```
 Required packages:
 ```playerctl wmctrl xdotool```
