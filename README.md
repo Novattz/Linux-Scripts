@@ -1,13 +1,29 @@
-# A Collection of Linux Utilities 
-Welcome to my repo! This repository houses a growing collection of scripts aimed at enhancing the Linux desktop experience. As of now, the repository contains scripts for media control with Spotify and volume notifications with Dunst.
+---
 
-## 🎵 Media Control for Spotify
-Control Spotify playback seamlessly. Play, pause, skip tracks right from your desktop!
+# Linux Scripts Collection
 
-## 🔊 Dunst Volume Notifications
-Get visual feedback when adjusting the volume on your system with beautiful, themed notifications.
+A handy collection of Linux Bash scripts for enhancing your desktop experience. Features include media control with Spotify, volume notifications with Dunst, and a functional to-do list.
 
-## 📥 Installation
-1. Clone this repository to your local machine.
+## Installation
+Clone the repository:
 ```
 git clone https://github.com/Novattz/Linux-Scripts
+```
+Set script permissions:
+```
+chmod +x Linux-Scripts/*.sh
+```
+
+## Scripts Overview
+- **Media Control for Spotify**: Control Spotify playback with ease.
+- **Dunst Volume Notifications**: Get visual volume notifications.
+- **Bash To-Do List**: Manage your tasks efficiently.
+
+## Requirements
+- `Dunst`, `alsa-utils` for volume notifications.
+- `playerctl`, `wmctrl`, `xdotool` for media control.
+- Bash environment for to-do list.
+
+For detailed usage, refer to individual script READMEs in the repository.
+
+---
